@@ -4,11 +4,14 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public static ArrayAdapter<String> arrayAdapter;
+	Editor appPreferences;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +40,9 @@ public class MainActivity extends Activity {
 		listOfAlarms.setAdapter(arrayAdapter);
 		
 		Map<String,?> keys = myPrefs.getAll();
+		appPreferences  = myPrefs.edit();
 		for(Map.Entry<String,?> entry : keys.entrySet()){
+				if(entry.getKey()!="lastPendingID")
 		            arrayAdapter.add(entry.getKey());          
 		 }
 		listOfAlarms.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -50,7 +56,22 @@ public class MainActivity extends Activity {
 		        alertDialog.setIcon(R.drawable.ic_launcher);
 		        alertDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog,int which) {
-		            	arrayAdapter.remove(arrayAdapter.getItem(arg2));
+		            	try{
+		            		int pendingId = Integer.parseInt(myPrefs.getString(arrayAdapter.getItem(arg2), "No message defined.").split(",")[4]);
+		            		Intent intent = new Intent(MainActivity.this, TestService.class);
+				            PendingIntent pintent = PendingIntent.getBroadcast(MainActivity.this, pendingId, intent, 0);
+				            AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+				            //for 24 hr timeinmillies = 24*60*60*1000
+				            alarm.cancel(pintent);
+				            Toast.makeText(MainActivity.this, "Cancelled alarm for "+pendingId, Toast.LENGTH_SHORT).show();
+		            		
+		            		appPreferences.remove(arrayAdapter.getItem(arg2));
+		            		appPreferences.commit();
+			            	arrayAdapter.remove(arrayAdapter.getItem(arg2));
+			            	Toast.makeText(MainActivity.this, "Successfully removed.", Toast.LENGTH_SHORT).show();
+		            	}catch(Exception e){
+		            		Toast.makeText(MainActivity.this, "Some error occoured." +e.getMessage(), Toast.LENGTH_SHORT).show();
+		            	}
 		            dialog.cancel();
 		            dialog.dismiss();
 		            }
@@ -73,7 +94,7 @@ public class MainActivity extends Activity {
 					long arg3) {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
 		        alertDialog.setTitle("Details of scheduler");
-		        alertDialog.setMessage(arrayAdapter.getItem(arg2));
+		        alertDialog.setMessage("Title :"+ arrayAdapter.getItem(arg2)+"\nMessage :"+myPrefs.getString(arrayAdapter.getItem(arg2), "No message defined.").split(",")[3]);
 		        alertDialog.setIcon(R.drawable.ic_launcher);
 		        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog,int which) {

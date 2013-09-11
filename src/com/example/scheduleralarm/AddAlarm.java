@@ -1,7 +1,9 @@
 package com.example.scheduleralarm;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 public class AddAlarm extends Activity{
 	public static SharedPreferences myPrefs;
 	public static Editor addIntoPrefs;
+	int pendingId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -31,6 +34,9 @@ public class AddAlarm extends Activity{
 		final EditText message = (EditText)findViewById(R.id.message);
 		final TimePicker setTime = (TimePicker)findViewById(R.id.timePicker1);
 		setTime.setIs24HourView(true);
+		setTime.setCurrentHour(Calendar.HOUR_OF_DAY);
+		setTime.setCurrentMinute(Calendar.MINUTE);
+		setTime.setOnTimeChangedListener(mStartTimeChangedListener);
 		
 		final SharedPreferences myPrefs = getApplicationContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE);
 		addIntoPrefs = myPrefs.edit();
@@ -56,33 +62,33 @@ public class AddAlarm extends Activity{
 					if(isPresent){
 						Toast.makeText(AddAlarm.this, "Same title already exists, Try some different title.", Toast.LENGTH_LONG).show();
 					}else{
+						
 						int hr = setTime.getCurrentHour();
-			//			Toast.makeText(AddAlarm.this, ""+hr, Toast.LENGTH_SHORT).show();
-						if(hr>=12){
-							hr=hr-12;
-						}
-			//			Toast.makeText(AddAlarm.this, ""+hr, Toast.LENGTH_SHORT).show();
 						int min = setTime.getCurrentMinute();
+						Toast.makeText(AddAlarm.this, "Hr :"+hr+"Min "+min, Toast.LENGTH_SHORT).show();
 						String titlestr = title.getText().toString();
 						String messagestr = message.getText().toString();
 						MainActivity.arrayAdapter.add(titlestr);
-						addIntoPrefs.putString(titlestr,titlestr+"?"+hr+"?"+min+"?"+messagestr);
+						pendingId = myPrefs.getInt("lastPendingID", 0);
+						if(pendingId==0){
+							pendingId=1;
+						}
+						addIntoPrefs.putInt("lastPendingID", pendingId);
+						addIntoPrefs.putString(titlestr,titlestr+","+hr+","+min+","+messagestr+","+pendingId);
 						addIntoPrefs.commit();
-	//					Toast.makeText(AddAlarm.this, "Reminder is set ", Toast.LENGTH_LONG).show();
 						
 						Calendar cal = Calendar.getInstance();
-						cal.add(Calendar.HOUR_OF_DAY, hr);
-						cal.add(Calendar.MINUTE, min);
-	//					Toast.makeText(AddAlarm.this,""+(Calendar.getInstance().getTimeInMillis()-cal.getTimeInMillis())+"hr :"+Calendar.getInstance().HOUR_OF_DAY+" "+cal.HOUR_OF_DAY, Toast.LENGTH_SHORT).show();
-			              Intent intent = new Intent(AddAlarm.this, TestService.class);
-			      
-			              PendingIntent pintent = PendingIntent.getBroadcast(AddAlarm.this, 0, intent, 0);
-			             
-			              AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-			              //for 24 hr timeinmillies = 24*60*60*1000
-			              alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pintent);
-//			              alarm.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pintent);
-						
+						cal.set(Calendar.HOUR_OF_DAY, hr);
+						cal.set(Calendar.MINUTE, min);
+						cal.set(Calendar.SECOND, 0);
+			            Intent intent = new Intent(AddAlarm.this, TestService.class);
+			            PendingIntent pintent = PendingIntent.getBroadcast(AddAlarm.this, pendingId, intent, 0);
+			            AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+			            //for 24 hr timeinmillies = 24*60*60*1000
+			            Toast.makeText(AddAlarm.this, ""+(Calendar.getInstance().getTimeInMillis()-cal.getTimeInMillis()), Toast.LENGTH_SHORT).show();
+			            alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pintent);
+			            Toast.makeText(AddAlarm.this, ""+titlestr+","+hr+","+min+","+messagestr+","+pendingId, Toast.LENGTH_LONG).show();
+	//			        alarm.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pintent);
 						AddAlarm.this.finish();
 					}
 					
@@ -92,6 +98,18 @@ public class AddAlarm extends Activity{
 		
 		
 		
+		
+		
+	}
+	
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		final TimePicker setTime = (TimePicker)findViewById(R.id.timePicker1);
+		setTime.setCurrentHour(Calendar.HOUR_OF_DAY);
+		setTime.setCurrentMinute(Calendar.MINUTE);
 	}
 
 }
