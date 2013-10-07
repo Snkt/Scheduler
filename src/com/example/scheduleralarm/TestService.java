@@ -11,7 +11,11 @@ public class TestService extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(final Context context, Intent intent) {
-		Toast.makeText(context, "Alarm done..", Toast.LENGTH_LONG).show();
+		Intent intent1 = new Intent(context,TimeToRing.class);
+		intent1.putExtra("title", intent.getExtras().getString("title"));
+		intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent1);
+		
 	}
 
 }

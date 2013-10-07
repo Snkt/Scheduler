@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 		Map<String,?> keys = myPrefs.getAll();
 		appPreferences  = myPrefs.edit();
 		for(Map.Entry<String,?> entry : keys.entrySet()){
-				if(entry.getKey()!="lastPendingID")
+				if(!entry.getKey().equals("lastPendingID"))
 		            arrayAdapter.add(entry.getKey());          
 		 }
 		listOfAlarms.setOnItemLongClickListener(new OnItemLongClickListener() {

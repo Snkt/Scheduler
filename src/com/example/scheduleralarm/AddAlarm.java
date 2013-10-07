@@ -36,7 +36,7 @@ public class AddAlarm extends Activity{
 		setTime.setIs24HourView(true);
 		setTime.setCurrentHour(Calendar.HOUR_OF_DAY);
 		setTime.setCurrentMinute(Calendar.MINUTE);
-		setTime.setOnTimeChangedListener(mStartTimeChangedListener);
+//		setTime.setOnTimeChangedListener(mStartTimeChangedListener);
 		
 		final SharedPreferences myPrefs = getApplicationContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE);
 		addIntoPrefs = myPrefs.edit();
@@ -72,6 +72,8 @@ public class AddAlarm extends Activity{
 						pendingId = myPrefs.getInt("lastPendingID", 0);
 						if(pendingId==0){
 							pendingId=1;
+						}else{
+							pendingId++;
 						}
 						addIntoPrefs.putInt("lastPendingID", pendingId);
 						addIntoPrefs.putString(titlestr,titlestr+","+hr+","+min+","+messagestr+","+pendingId);
@@ -82,6 +84,7 @@ public class AddAlarm extends Activity{
 						cal.set(Calendar.MINUTE, min);
 						cal.set(Calendar.SECOND, 0);
 			            Intent intent = new Intent(AddAlarm.this, TestService.class);
+			            intent.putExtra("title",titlestr);
 			            PendingIntent pintent = PendingIntent.getBroadcast(AddAlarm.this, pendingId, intent, 0);
 			            AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 			            //for 24 hr timeinmillies = 24*60*60*1000
