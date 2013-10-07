@@ -26,6 +26,7 @@
         </activity>
         <activity android:name="com.example.scheduleralarm.AddAlarm"></activity>
         <activity android:name="com.example.scheduleralarm.TimeToRing"></activity>
+        <activity android:name="com.example.scheduleralarm.alarmTime"></activity>
         <receiver android:name="com.example.scheduleralarm.TestService"></receiver>
     </application>
 

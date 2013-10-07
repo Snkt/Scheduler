@@ -11,7 +11,7 @@ public class TestService extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(final Context context, Intent intent) {
-		Intent intent1 = new Intent(context,TimeToRing.class);
+		Intent intent1 = new Intent(context,alarmTime.class);
 		intent1.putExtra("title", intent.getExtras().getString("title"));
 		intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent1);
