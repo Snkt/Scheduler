@@ -65,7 +65,7 @@ public class AddAlarm extends Activity{
 						
 						int hr = setTime.getCurrentHour();
 						int min = setTime.getCurrentMinute();
-						Toast.makeText(AddAlarm.this, "Hr :"+hr+"Min "+min, Toast.LENGTH_SHORT).show();
+//						Toast.makeText(AddAlarm.this, "Hr :"+hr+"Min "+min, Toast.LENGTH_SHORT).show();
 						String titlestr = title.getText().toString();
 						String messagestr = message.getText().toString();
 						MainActivity.arrayAdapter.add(titlestr);
@@ -88,9 +88,9 @@ public class AddAlarm extends Activity{
 			            PendingIntent pintent = PendingIntent.getBroadcast(AddAlarm.this, pendingId, intent, 0);
 			            AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 			            //for 24 hr timeinmillies = 24*60*60*1000
-			            Toast.makeText(AddAlarm.this, ""+(Calendar.getInstance().getTimeInMillis()-cal.getTimeInMillis()), Toast.LENGTH_SHORT).show();
+//			            Toast.makeText(AddAlarm.this, ""+(Calendar.getInstance().getTimeInMillis()-cal.getTimeInMillis()), Toast.LENGTH_SHORT).show();
 			            alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pintent);
-			            Toast.makeText(AddAlarm.this, ""+titlestr+","+hr+","+min+","+messagestr+","+pendingId, Toast.LENGTH_LONG).show();
+//			            Toast.makeText(AddAlarm.this, ""+titlestr+","+hr+","+min+","+messagestr+","+pendingId, Toast.LENGTH_LONG).show();
 	//			        alarm.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pintent);
 						AddAlarm.this.finish();
 					}

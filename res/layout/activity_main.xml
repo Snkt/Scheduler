@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/backgnd"
     tools:context=".MainActivity" >
 
     <TextView
@@ -22,9 +23,9 @@
     <Button
         android:id="@+id/button1"
         android:layout_width="80dp"
+        android:background="@drawable/addicon"
         android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:text="Add" />
+        android:layout_alignParentRight="true"/>
 
             <ListView
                 android:id="@+id/listofalarms"

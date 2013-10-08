@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
 		        alertDialog.setTitle("Confirm Delete...");
 		        alertDialog.setMessage(arrayAdapter.getItem(arg2));
-		        alertDialog.setIcon(R.drawable.ic_launcher);
+		        alertDialog.setIcon(R.drawable.delete);
 		        alertDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog,int which) {
 		            	try{
