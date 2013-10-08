@@ -93,9 +93,9 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-		        alertDialog.setTitle("Details of scheduler");
+		        alertDialog.setTitle("Details");
 		        alertDialog.setMessage("Title :"+ arrayAdapter.getItem(arg2)+"\nMessage :"+myPrefs.getString(arrayAdapter.getItem(arg2), "No message defined.").split(",")[3]);
-		        alertDialog.setIcon(R.drawable.ic_launcher);
+		        alertDialog.setIcon(R.drawable.info);
 		        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog,int which) {
 		            dialog.cancel();

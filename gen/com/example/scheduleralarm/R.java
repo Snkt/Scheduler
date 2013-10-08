@@ -25,14 +25,16 @@ public final class R {
         public static final int addicon2=0x7f020001;
         public static final int alarmimg=0x7f020002;
         public static final int appicon=0x7f020003;
-        public static final int backgnd=0x7f020004;
-        public static final int delete=0x7f020005;
-        public static final int gifimg1=0x7f020006;
-        public static final int gifimg2=0x7f020007;
-        public static final int gifimg3=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int image_background_animation=0x7f02000a;
-        public static final int notification=0x7f02000b;
+        public static final int appiconimg=0x7f020004;
+        public static final int backgnd=0x7f020005;
+        public static final int delete=0x7f020006;
+        public static final int gifimg1=0x7f020007;
+        public static final int gifimg2=0x7f020008;
+        public static final int gifimg3=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int image_background_animation=0x7f02000b;
+        public static final int info=0x7f02000c;
+        public static final int notification=0x7f02000d;
     }
     public static final class id {
         public static final int action_settings=0x7f08000d;
