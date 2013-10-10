@@ -27,7 +27,7 @@ public class AddAlarm extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.addalarm);
+		setContentView(R.layout.addalrmtemppage);
 		
 		final Button saveButton = (Button)findViewById(R.id.savebtn);
 		final EditText title = (EditText)findViewById(R.id.title);
@@ -69,6 +69,7 @@ public class AddAlarm extends Activity{
 						String titlestr = title.getText().toString();
 						String messagestr = message.getText().toString();
 						MainActivity.arrayAdapter.add(titlestr);
+						MainActivity.arrayAdapter.notifyDataSetChanged();
 						pendingId = myPrefs.getInt("lastPendingID", 0);
 						if(pendingId==0){
 							pendingId=1;
