@@ -27,7 +27,7 @@ public class AddAlarm extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.addalrmtemppage);
+		setContentView(R.layout.addalarm);
 		
 		final Button saveButton = (Button)findViewById(R.id.savebtn);
 		final EditText title = (EditText)findViewById(R.id.title);

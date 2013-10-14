@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/firstpage"
+    android:background="@drawable/backgnd"
     tools:context=".MainActivity" >
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_alignBottom="@+id/button1"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/button1"
+        android:text="Schedulers :"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
@@ -22,7 +23,7 @@
         android:layout_height="60dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/transparent" />
+        android:background="@drawable/addicon" />
 
             <ListView
                 android:id="@+id/listofalarms"

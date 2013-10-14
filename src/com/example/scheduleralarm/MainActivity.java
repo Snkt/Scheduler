@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 	public static ArrayAdapter<String> arrayAdapter;
 	Editor appPreferences;
 	SharedPreferences myPrefs;
-	ViewHolder holder = new ViewHolder();
+//	ViewHolder holder = new ViewHolder();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,8 @@ public class MainActivity extends Activity {
 		 }
 
 		
-		arrayAdapter = new CustomArrayAdapter(this,R.layout.customlistview,R.id.custmtxtview, list);
+//		arrayAdapter = new CustomArrayAdapter(this,R.layout.customlistview,R.id.custmtxtview, list);
+		arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
 		arrayAdapter.notifyDataSetChanged();
 		listOfAlarms.setAdapter(arrayAdapter);
 		
@@ -111,7 +112,7 @@ public class MainActivity extends Activity {
 					long arg3) {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
 		        alertDialog.setTitle("Details");
-		        alertDialog.setMessage("Title :"+ arrayAdapter.getItem(arg2)+"\nMessage :"+myPrefs.getString(arrayAdapter.getItem(arg2), "No message defined.").split(",")[3]);
+		        alertDialog.setMessage("Title :"+ arrayAdapter.getItem(arg2)+"\n\nMessage :"+myPrefs.getString(arrayAdapter.getItem(arg2), "No message defined.").split(",")[3]);
 		        alertDialog.setIcon(R.drawable.info);
 		        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		            public void onClick(DialogInterface dialog,int which) {
@@ -140,68 +141,54 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	private class CustomArrayAdapter extends ArrayAdapter<String> implements OnClickListener {
-
-	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-	    //Context contxt;
-
-	    public CustomArrayAdapter(Context context,int resource ,int textViewResourceId,
-	        List<String> objects) {
-	    	
-	      super(context, resource,textViewResourceId, objects);
-	    //  contxt = context;
-	      for (int i = 0; i < objects.size(); ++i) {
-	        mIdMap.put(objects.get(i), i);
-	      }
-	    }
-
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView = inflater.inflate(R.layout.customlistview, parent, false);
-			
-			
-			holder.editbtn = (Button)rowView.findViewById(R.id.custmeditbutton);
-			holder.editbtn.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(MainActivity.this, "btn cliked"+position, Toast.LENGTH_SHORT).show();
-				}
-			});
-			
-			return super.getView(position, rowView, parent);
-		}
-
-	    
-
+//	private class CustomArrayAdapter extends ArrayAdapter<String> implements OnClickListener {
+//
+//	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+//	    //Context contxt;
+//
+//	    public CustomArrayAdapter(Context context,int resource ,int textViewResourceId,
+//	        List<String> objects) {
+//	    	
+//	      super(context, resource,textViewResourceId, objects);
+//	    //  contxt = context;
+//	      for (int i = 0; i < objects.size(); ++i) {
+//	        mIdMap.put(objects.get(i), i);
+//	      }
+//	    }
+//
 //		@Override
-//	    public long getItemId(int position) {
-//	      String item = getItem(position);
-//	      return mIdMap.get(item);
-//	    }
-
-//	    @Override
-//	    public boolean hasStableIds() {
-//	      return true;
-//	    }
-
-
-
-
-	  }
-	
-	static class ViewHolder {
-        TextView name;
-        Button editbtn;
-        ToggleButton toggleBtn;
-    }
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//
+//		@Override
+//		public View getView(final int position, View convertView, ViewGroup parent) {
+//			// TODO Auto-generated method stub
+//			LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//			final View rowView = inflater.inflate(R.layout.customlistview, parent, false);
+//			
+//			
+//			holder.editbtn = (Button)rowView.findViewById(R.id.custmeditbutton);			
+//			holder.editbtn.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					holder.toggleBtn = (ToggleButton)rowView.findViewById(R.id.custmtoggleButton);
+//					holder.name = (TextView)rowView.findViewById(R.id.custmtxtview);
+//					Toast.makeText(MainActivity.this, "btn cliked"+position+holder.name.getText(), Toast.LENGTH_SHORT).show();
+//				}
+//			});
+//			
+//			return rowView;
+//		}
+//
+//	  }
+//	
+//	static class ViewHolder {
+//        TextView name;
+//        Button editbtn;
+//        ToggleButton toggleBtn;
+//    }
 
 }
